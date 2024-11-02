@@ -1,13 +1,6 @@
 "use client"
 import React, { useState } from 'react';
 import { Button, Checkbox, Divider, Tabs } from 'antd';
-const CheckboxGroup = Checkbox.Group;
-
-
-
-
-
-
 const items = new Array(3).fill(null).map((_, i) => {
     const id = String(i + 1);
     return {
@@ -17,12 +10,14 @@ const items = new Array(3).fill(null).map((_, i) => {
     };
 });
 
+const operations = <Button onClick={ }>right</Button>;
 const TabAdvertiserment = () => {
 
 
     return (
         <>
-            <Tabs tabBarExtraContent={<button> 123</button>} items={items} />
+            <Tabs tabBarExtraContent={operations}
+                items={items} centered type='card' />
         </>
     );
 };
