@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { NavBar } from "@/components/layout/navbar";
 import FooterApp from "@/components/layout/footer";
+import TabAdvertiserment from "@/components/layout/TabAdvertisement";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NavBar />
+        <TabAdvertiserment />
         {children}
         <FooterApp />
       </body>
