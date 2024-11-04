@@ -1,10 +1,11 @@
-import { CarouselPlugin } from "@/components/layout/tab";
-import Image from "next/image";
+import Carousel from "@/components/layout/tab";
+
 
 export default function Home() {
   return (
-    <>hello world
-      <CarouselPlugin />
-    </>
+    <div className="w-[100%] h-[150px]">
+      <Carousel />
+    </div>
+
   );
 }

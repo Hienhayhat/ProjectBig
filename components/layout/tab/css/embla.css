@@ -21,6 +21,8 @@
     flex: 0 0 var(--slide-size);
     min-width: 0;
     padding-left: var(--slide-spacing);
+    border-radius: 2px solid black;
+
 }
 
 .embla__slide__number {
@@ -99,7 +101,7 @@
     display: inline-flex;
     text-decoration: none;
     cursor: pointer;
-    border: 0;
+    border: 1px solid black;
     padding: 0;
     margin: 0;
     width: 2.6rem;
