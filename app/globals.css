@@ -72,3 +72,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.custom-bg {
+  background-image: linear-gradient(to right, #d8ecfb57, #6EB1F4, #7FD4FF, #70f3ff32);
+
+}

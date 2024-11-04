@@ -3,14 +3,14 @@ import * as React from "react";
 function SearchIcon(props: React.SVGProps<SVGSVGElement> | undefined) {
   return (
     <svg
-      width="50"
-      height="50"
+      width="30"
+      height="30"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect width="50" height="50" fill="white" />
+      <rect width="30" height="30" fill="white" />
       <path
         d="M43.7503 23.9587C43.7503 34.8962 34.8962 43.7503 23.9587 43.7503C13.0212 43.7503 4.16699 34.8962 4.16699 23.9587C4.16699 13.0212 13.0212 4.16699 23.9587 4.16699"
         stroke="#080808"
