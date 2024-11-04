@@ -19,24 +19,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  <ConfigProvider
-    theme={{
-      components: {
-        Tabs: {
-          itemHoverColor: 'red',
-        },
-
-      },
-    }}
-  />
-
   return (
     <html lang="en">
       <body
         className={` antialiased`}
       >
         <NavBar />
-        <TabAdvertiserment />
         {children}
         <FooterApp />
       </body>
