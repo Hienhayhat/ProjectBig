@@ -19,23 +19,21 @@ const locale = ["Vi", "En"];
 export const NavBar = () => {
   const [input, setInput] = useState<string>("");
   return (
-    <div className="sticky top-0 max-h-32 bg-white px-[16px] md:px-[80px] z-10 custom-bg pb-2">
+    <div className="sticky top-0 bg-white px-[16px] md:px-[80px] z-10 custom-bg pt-2 pb-3">
       <div className="w-full flex justify-between m-2">
         <div></div>
         <div className="flex gap-6">
           <Link
             href="/"
             target="_blank"
-            className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-sm"
+            className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-md"
           >
             Hỗ trợ
           </Link>
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>
-                  VI
-                </NavigationMenuTrigger>
+                <NavigationMenuTrigger className="">VI</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="flex flex-col w-[61.23px] text-center">
                     {locale?.map((item) => (
@@ -54,14 +52,14 @@ export const NavBar = () => {
           <Link
             href="/"
             target="_blank"
-            className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-sm"
+            className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-md"
           >
             Đăng ký
           </Link>
           <Link
             href="/"
             target="_blank"
-            className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-sm"
+            className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-md"
           >
             Đăng nhập
           </Link>
@@ -70,7 +68,7 @@ export const NavBar = () => {
 
       <div className="relative flex items-center px-10 h-full justify-between">
         <div className="flex flex-row items-center gap-1">
-          <div className="relative w-10 h-10 overflow-hidden">
+          <div className="relative w-20 h-20 overflow-hidden">
             <Image
               src="/images/cover.png"
               alt=""
@@ -101,7 +99,9 @@ export const NavBar = () => {
           </button>
         </form>
 
-        <ShoppingCartIcon width={60} height={60} />
+        <div className="flex w-[112.5px] h-auto justify-center items-center cursor-pointer transition-transform hover:scale-110">
+          <ShoppingCartIcon width={40} height={40} />
+        </div>
       </div>
     </div>
   );
