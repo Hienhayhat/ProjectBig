@@ -20,12 +20,11 @@ export const NavBar = () => {
   const [input, setInput] = useState<string>("");
   return (
     <div className="sticky top-0 bg-white px-[16px] md:px-[80px] z-10 custom-bg pt-2 pb-3">
-      <div className="w-full flex justify-between m-2">
+      <div className="w-full flex justify-between m-1">
         <div></div>
         <div className="flex gap-6">
           <Link
             href="/"
-            target="_blank"
             className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-md"
           >
             Hỗ trợ
@@ -50,15 +49,13 @@ export const NavBar = () => {
             </NavigationMenuList>
           </NavigationMenu>
           <Link
-            href="/"
-            target="_blank"
+            href="/register"
             className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-md"
           >
             Đăng ký
           </Link>
           <Link
-            href="/"
-            target="_blank"
+            href="/signin"
             className="flex items-center transition duration-300 hover:bg-accent px-2 rounded-md"
           >
             Đăng nhập
@@ -68,7 +65,7 @@ export const NavBar = () => {
 
       <div className="relative flex items-center px-10 h-full justify-between">
         <div className="flex flex-row items-center gap-1">
-          <div className="relative w-20 h-20 overflow-hidden">
+          <div className="relative w-10 h-10 overflow-hidden">
             <Image
               src="/images/cover.png"
               alt=""
