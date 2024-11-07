@@ -5,7 +5,7 @@ import Link from "next/link"
 
 const FooterApp = (): any => {
     return (
-        <div className="fixed bottom-0 w-[100%] " >
+        <div className=" w-[100%] " >
             <Footer className="relative h-[100px]">
                 <Link href="/helpclient/FAQ"  ><div className="text-0.5xl sm:text-1xl absolute right-2 top-[10%] ">FAQ</div></Link>
                 <Link href="/helpclient/aboutUs"><div className="text-0.5xl sm:text-1xl absolute right-2 top-[30%] ">About Us</div></Link>

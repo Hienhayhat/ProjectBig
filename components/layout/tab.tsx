@@ -1,8 +1,6 @@
 'use client'
 import { EmblaOptionsType } from 'embla-carousel'
-
 import './tab/css/embla.css'
-import './tab/css/sandbox.css'
 import EmblaCarousel from './tab/js/EmblaCarousel'
 
 
@@ -14,15 +12,15 @@ const SLIDES = [
         id: 1
     },
     {
-        img: '/images/1328396.png',
+        img: '/images/Screenshot 2024-08-24 233347.png',
         id: 2
     },
     {
-        img: '/images/1328396.png',
+        img: '/images/Screenshot 2024-08-28 220238.png',
         id: 3
     },
     {
-        img: '/images/1328396.png',
+        img: '/images/Screenshot 2024-10-25 153009.png',
         id: 4
     }
 ]
