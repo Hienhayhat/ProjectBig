@@ -1,13 +1,31 @@
 'use client'
 import { EmblaOptionsType } from 'embla-carousel'
-import './tab/css/base.css'
+
 import './tab/css/embla.css'
 import './tab/css/sandbox.css'
 import EmblaCarousel from './tab/js/EmblaCarousel'
 
+
 const OPTIONS: EmblaOptionsType = { loop: true }
-const SLIDE_COUNT = 5
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+
+const SLIDES = [
+    {
+        img: '/images/1328396.png',
+        id: 1
+    },
+    {
+        img: '/images/1328396.png',
+        id: 2
+    },
+    {
+        img: '/images/1328396.png',
+        id: 3
+    },
+    {
+        img: '/images/1328396.png',
+        id: 4
+    }
+]
 
 const Carousel = () => {
     return (
