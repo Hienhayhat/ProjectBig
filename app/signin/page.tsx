@@ -45,7 +45,7 @@ export default function Page() {
   return (
     <section className="flex justify-center items-center px-[16px] md:px-[80px] h-[400px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-[400px]">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-[400px] p-5 border rounded-lg transition-all hover:shadow-2xl">
           <FormField
             control={form.control}
             name="username"
@@ -66,13 +66,13 @@ export default function Page() {
               <FormItem>
                 <FormLabel className="text-base">Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="shadcn" {...field} type="password"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="mt-2">Submit</Button>
         </form>
       </Form>
     </section>
