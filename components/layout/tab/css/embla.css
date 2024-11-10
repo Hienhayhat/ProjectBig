@@ -1,19 +1,34 @@
 .embla {
-    max-width: 48rem;
-    margin: auto;
-    --slide-height: 19rem;
+    /* width: 100vw; */
+
+    --slide-height: 21rem;
+    --slide-weight: 50rem;
     --slide-spacing: 1rem;
     --slide-size: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .embla__viewport {
     overflow: hidden;
+    position: relative;
+    --display_btn: none;
+    border-radius: 8px solid white;
+    border: 1px white;
+
 }
 
+.embla__viewport:hover {
+    --display_btn: flex
+}
+
+
 .embla__container {
+    position: absolute;
     display: flex;
     touch-action: pan-y pinch-zoom;
-    margin-left: calc(var(--slide-spacing) * -1);
+    width: 100%;
+    height: 100%;
 }
 
 .embla__slide {
@@ -22,7 +37,6 @@
     min-width: 0;
     padding-left: var(--slide-spacing);
     border-radius: 2px solid black;
-
 }
 
 .embla__slide__number {
@@ -33,20 +47,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--slide-height);
     user-select: none;
+
+
 }
 
-.embla__controls {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    justify-content: space-between;
-    gap: 1.2rem;
-    margin-top: 1.8rem;
-}
+
 
 .embla__buttons {
-    display: grid;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.6rem;
     align-items: center;
@@ -69,10 +80,11 @@
     height: 3.6rem;
     z-index: 1;
     border-radius: 50%;
-    color: var(--text-body);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    display: var(--display_btn);
 }
 
 .embla__button:disabled {
@@ -85,11 +97,13 @@
 }
 
 .embla__dots {
+    position: absolute;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
     margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+    bottom: 5px;
+    right: 48%;
+
 }
 
 .embla__dot {
@@ -101,15 +115,16 @@
     display: inline-flex;
     text-decoration: none;
     cursor: pointer;
-    border: 1px solid black;
+    border: 2px solid rgb(92, 90, 90);
     padding: 0;
     margin: 0;
-    width: 20px;
-    height: 20px;
+    width: 13px;
+    height: 13px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    margin: 0 1px;
 }
 
 .embla__dot:after {
@@ -127,5 +142,5 @@
 }
 
 .embla__dot--selected {
-    background-color: red;
+    background-color: rgb(253, 58, 58);
 }

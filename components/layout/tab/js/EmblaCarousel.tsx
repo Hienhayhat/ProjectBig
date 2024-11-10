@@ -14,7 +14,7 @@ type PropType = {
 const EmblaCarousel: React.FC<PropType> = (props) => {
     const { slides, options } = props
     const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-        Autoplay({ delay: 3000 })
+        Autoplay({ delay: 3000, stopOnInteraction: false })
     ])
 
     const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -30,19 +30,19 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     return (
         <section className="embla ">
 
-            <div className="embla__viewport" ref={emblaRef}>
+            <div className="embla__viewport w-[24rem]  sm:w-[50rem] h-[10rem] sm:h-[21rem] my-[10px]" ref={emblaRef}>
                 <div className="embla__container">
-                    {slides.map((index) => (
+                    {slides.map((index: any) => (
                         <div className="embla__slide" key={index.id}>
-                            <div className="embla__slide__number"><Image src={index.img} width={500}
-                                height={300}
-                                alt="Picture of the author"></Image></div>
+                            <div className="embla__slide__number">
+                                <Image src={index.img} fill
+                                    alt="Picture of the author"></Image></div>
                         </div>
                     ))}
                 </div>
-            </div>
+                <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} className='absolute left-0 embla__button top-[40%]' />
+                <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} className='absolute right-0  embla__button top-[40%]' />
 
-            <div className="embla__controls">
                 <div className="embla__dots">
                     {scrollSnaps.map((_, index) => (
                         <DotButton
@@ -55,6 +55,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                     ))}
                 </div>
             </div>
+
+
         </section>
     )
 }
