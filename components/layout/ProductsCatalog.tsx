@@ -16,6 +16,35 @@ const arrProducts = [{
     URL: '123'
 
 },
+{
+    stt: 2,
+    name: 'đồ chơi',
+    icon: 'hiển',
+    URL: '123'
+
+},
+{
+    stt: 2,
+    name: 'đồ để đập ',
+    icon: 'hiển',
+    URL: '123'
+
+},
+{
+    stt: 2,
+    name: 'đồ hàng ',
+    icon: 'hiển',
+    URL: '123'
+
+},
+{
+    stt: 2,
+    name: 'đồ bla bla',
+    icon: 'hiển',
+    URL: '123'
+
+},
+
 
 ]
 
