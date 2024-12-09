@@ -86,7 +86,7 @@ export const NavBar = () => {
 
         <form
           className="flex w-[670px] h-[50px] rounded-2xl border-[2px] border-gray-400 p-3 items-center bg-white"
-          onSubmit={() => {}}
+          onSubmit={() => { }}
         >
           <input
             type="text"

@@ -1,55 +1,41 @@
 import Link from "next/link"
 
+const arrProducts = [
+    {
+        stt: 1,
+        name: 'thể thao',
+        icon: 'hiển',
+    },
 
+    {
+        stt: 2,
+        name: 'đồ chơi',
+        icon: 'hiển',
+        URL: '123'
 
+    },
+    {
+        stt: 3,
+        name: 'đồ để đập ',
+        icon: 'hiển',
+        URL: '123'
 
-const arrProducts = [{
-    stt: 1,
-    name: 'thể thao',
-    icon: 'hiển',
+    },
+    {
+        stt: 4,
+        name: 'đồ hàng ',
+        icon: 'hiển',
+        URL: '123'
 
+    },
+    {
+        stt: 5,
+        name: 'đồ bla bla',
+        icon: 'hiển',
+        URL: '123'
 
-}, {
-    stt: 2,
-    name: 'đồ ăn',
-    icon: 'hiển',
-    URL: '123'
-
-},
-{
-    stt: 2,
-    name: 'đồ chơi',
-    icon: 'hiển',
-    URL: '123'
-
-},
-{
-    stt: 2,
-    name: 'đồ để đập ',
-    icon: 'hiển',
-    URL: '123'
-
-},
-{
-    stt: 2,
-    name: 'đồ hàng ',
-    icon: 'hiển',
-    URL: '123'
-
-},
-{
-    stt: 2,
-    name: 'đồ bla bla',
-    icon: 'hiển',
-    URL: '123'
-
-},
-
-
+    },
 ]
-
-
-
 
 const ProductsCatalog = () => {
     return (
