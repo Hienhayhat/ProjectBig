@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import Product from "./productAtMenu";
+
 
 const axios = require('axios')
 const Products = () => {
@@ -16,15 +16,13 @@ const Products = () => {
                 console.log(error);
             });
     }, []);
-
-
-
     return (
         <div className="w-[85%] sm:w-[60%] flex flex-wrap border-2 border-black justify-center">
             {listProduct.map((productdata: any) => {
                 return (
-                    <div>
-                        <Product productdata={productdata} />
+                    <div key={productdata._id}>
+                        <span>{productdata.name}</span>
+                        <img src={`${process.env.API}${productdata.img}.jpg`}></img>
                     </div>
                 )
             })}
