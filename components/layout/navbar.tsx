@@ -22,7 +22,7 @@ export const NavBar = () => {
   const router = useRouter()
   return (
     <header className="sticky top-0 bg-white px-[16px] md:px-[80px] z-10 custom-bg pb-3">
-      <div className="w-full flex justify-between m-1">
+      <div className="w-full flex justify-between ">
         <div></div>
         <div className="flex gap-6">
           <Link

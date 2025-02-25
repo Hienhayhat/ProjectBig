@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+const axios = require('axios')
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -39,6 +39,14 @@ export default function Page() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    axios.post(`${process.env.API}login`, values)
+      .then(function (response: any) {
+        console.log(response);
+
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
     console.log(values);
   }
 
@@ -53,7 +61,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel className="text-base">Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -66,7 +74,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel className="text-base">Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} type="password"/>
+                  <Input placeholder="Password" {...field} type="password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

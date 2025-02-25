@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+const axios = require('axios')
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,6 +20,13 @@ const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  password: z.string().min(6, {
+    message: "Password must be at least 6 characters.",
+  }),
+  email: z.string().email({
+    message: "Invalid email address.",
+  }),
+  phonenumber: z.string().optional()
 });
 
 export default function Page() {
@@ -35,6 +42,14 @@ export default function Page() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    axios.post(`${process.env.API}users`, values)
+      .then(function (response: any) {
+        console.log(response);
+
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
     console.log(values);
   }
 
@@ -49,7 +64,47 @@ export default function Page() {
               <FormItem>
                 <FormLabel className="text-base">Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Username" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base">Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="Password" {...field} type="password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base">Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="Email" {...field} type="email" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phonenumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base">Phone Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Phone Number" {...field} type="phonenumber" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -39,7 +39,7 @@ const arrProducts = [
 
 const ProductsCatalog = () => {
     return (
-        <div className="flex flex-row justify-center py-10">
+        <div className="flex flex-row justify-center py-10 ">
             {arrProducts.map((product: Catalog) => {
                 return (
                     <div key={product.stt} className="h-[100px] w-[100px] border-[3px] mx-3 border-solid border-cyan-200 rounded-[10px] shadow-lg shadow-cyan-500/50 bg-cyan-100 hover:border-pink-200 hover:shadow-pink-500/50 " >
