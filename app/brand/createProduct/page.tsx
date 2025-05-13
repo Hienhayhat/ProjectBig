@@ -1,4 +1,4 @@
-import CreateProduct from '@/components/layout/createProduct';
+import CreateProduct from '@/components/product/createProduct';
 
 export default function FileUpload() {
     return (

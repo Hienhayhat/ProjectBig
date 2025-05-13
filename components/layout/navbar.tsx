@@ -14,12 +14,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
 const locale = ["Vi", "En"];
+import { signOut, useSession } from "next-auth/react"
+
 
 export const NavBar = () => {
   const [input, setInput] = useState<string>("");
   const router = useRouter()
+  const { data: session } = useSession()
+
+
   return (
     <header className="sticky top-0 bg-white px-[16px] md:px-[80px] z-10 custom-bg pb-3">
       <div className="w-full flex justify-between ">
@@ -50,18 +54,37 @@ export const NavBar = () => {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <Link
-            href="/register"
-            className="flex items-center transition duration-300 hover:text-gray-500 px-2 rounded-md"
-          >
-            Đăng ký
-          </Link>
-          <Link
-            href="/signin"
-            className="flex items-center transition duration-300 hover:text-gray-500 px-2 rounded-md"
-          >
-            Đăng nhập
-          </Link>
+
+          {session?.user ? (
+            <div className="relative group flex items-center gap-2 cursor-pointer">
+              <span>{session.user.name}</span>
+              <button
+                className="absolute top-full left-0 mt-2 w-max px-4 py-2 bg-red-500 text-white rounded shadow opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                onClick={() => signOut()}
+                type="button"
+              >
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link
+                href="/register"
+                className="flex items-center transition duration-300 hover:text-gray-500 px-2 rounded-md"
+              >
+                Đăng ký
+              </Link>
+              <Link
+                href="/signin"
+                className="flex items-center transition duration-300 hover:text-gray-500 px-2 rounded-md"
+              >
+                Đăng nhập
+              </Link>
+            </>
+          )}
+
+
+
         </div>
       </div>
 

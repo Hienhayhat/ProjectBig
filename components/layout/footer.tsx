@@ -11,7 +11,6 @@ const FooterApp = (): any => {
                 <Link href="/helpclient/aboutUs"><div className="text-0.5xl sm:text-1xl absolute right-2 top-[30%] ">About Us</div></Link>
                 <div className="flex flex-col absolute left-1 top-1">
                     <Link href="https://www.facebook.com/profile.php?id=100076069864342" className="text-1xl sm:text-2xl "><FacebookFilled />Hiển</Link>
-                    <Link href="https://www.facebook.com/profile.php?id=100080934456147" className="text-1xl sm:text-2xl "><FacebookFilled /> Dũng</Link>
                     <Link href="https://github.com/Hienhayhat/ProjectBig" className="text-1xl sm:text-2xl "><GithubFilled />github</Link>
 
                 </div>

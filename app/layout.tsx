@@ -3,7 +3,8 @@ import "./globals.css";
 
 import { NavBar } from "@/components/layout/navbar";
 import FooterApp from "@/components/layout/footer";
-import { ConfigProvider } from "antd";
+import { SessionProvider } from "next-auth/react";
+
 
 
 export const metadata: Metadata = {
@@ -24,9 +25,13 @@ export default function RootLayout({
       <body
         className={` antialiased`}
       >
-        <NavBar />
-        {children}
-        <FooterApp />
+        <SessionProvider>
+          <NavBar />
+          {children}
+          <FooterApp />
+        </SessionProvider>
+
+
       </body>
     </html>
   );
