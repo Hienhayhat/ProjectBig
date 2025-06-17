@@ -13,17 +13,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 const locale = ["Vi", "En"];
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 
 
-export const NavBar = () => {
+export const NavBar = (props: any) => {
   const [input, setInput] = useState<string>("");
   const router = useRouter()
-  const { data: session } = useSession()
-
-
+  const { session } = props;
   return (
     <header className="sticky top-0 bg-white px-[16px] md:px-[80px] z-10 custom-bg pb-3">
       <div className="w-full flex justify-between ">

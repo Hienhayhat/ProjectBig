@@ -4,6 +4,8 @@ import "./globals.css";
 import { NavBar } from "@/components/layout/navbar";
 import FooterApp from "@/components/layout/footer";
 import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+
 
 
 
@@ -15,18 +17,21 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth()
+
+
   return (
     <html lang="en">
       <body
         className={` antialiased`}
       >
         <SessionProvider>
-          <NavBar />
+          <NavBar session={session} />
           {children}
           <FooterApp />
         </SessionProvider>

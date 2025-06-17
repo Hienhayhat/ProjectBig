@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import axios from "axios"
+import Google from "next-auth/providers/google"
+import { redirect } from 'next/navigation'
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -34,21 +36,64 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 return user
             },
+        }), Google({
+
+            clientId: process.env.AUTH_GOOGLE_ID!,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+            authorization: {
+                params: {
+                    scope: 'openid email profile',
+                    prompt: 'consent',
+                    access_type: 'offline',
+                    response_type: 'code',
+                },
+            },
         }),
     ],
     pages: {
         signIn: "/signin",
     },
     callbacks: {
-        jwt({ token, user }) {
+        async jwt({ token, account, user }) {
+            // Handle credentials login
             if (user) { // User is available during sign-in
-                token.user = user as IUser
+                token.user = user as any;
             }
-            return token
+
+            // Handle Google login
+            if (account?.provider === 'google') {
+                try {
+                    console.log(account.access_token);
+
+                    const res = await axios.post(`${process.env.BE_URL}/auth/google`, {
+                        accessToken: account.access_token,
+
+                    });
+                    if (res.status !== 200) {
+                        console.log(1);
+
+                        redirect('/');
+                    }
+
+                    token.accessToken = res.data.accessToken; // your backend JWT
+                } catch (error) {
+                    console.error('Google backend login failed:', error);
+                }
+            }
+
+            return token;
         },
-        session({ session, token }) {
-            (session.user as any) = token.user
-            return session
+        async session({ session, token }) {
+            // ✅ Expose access_token to client
+            session.accessToken = token.accessToken as string;
+            return session;
         },
+
+
+        // authorized: async ({ auth }) => {
+        //     // Logged in users are authenticated, otherwise redirect to login page
+        //     return !!auth
+        // }
     },
+
 })

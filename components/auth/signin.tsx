@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import GoogleLogin from "./Google.Login";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -36,17 +36,19 @@ export default function Signin() {
             password: "",
         },
     });
-
+    const router = useRouter()
     // 2. Define a submit handler.
     const onSubmit = async (values: any) => {
         // Do something with the form values.
+
         const { username, password } = values
         const value = await signIn("credentials", { username, password, redirect: false })
         if (value?.error) {
             alert("Login failed")
 
         } else {
-            redirect("/")
+            router.push("/")
+            router.refresh()
         }
     }
 
