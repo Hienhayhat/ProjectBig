@@ -13,17 +13,18 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 const locale = ["Vi", "En"];
 import { signOut } from "next-auth/react"
 
 
 export const NavBar = (props: any) => {
   const [input, setInput] = useState<string>("");
+  const [showSignOut, setShowSignOut] = useState(false); // Add this state
   const router = useRouter()
   const { session } = props;
   return (
-    <header className="sticky top-0 bg-white px-[16px] md:px-[80px] z-10 custom-bg pb-3">
+    <header className="sticky top-0  px-[16px] md:px-[80px] z-10 custom-bg pb-3">
       <div className="w-full flex justify-between ">
         <div></div>
         <div className="flex gap-6">
@@ -54,15 +55,30 @@ export const NavBar = (props: any) => {
           </NavigationMenu>
 
           {session?.user ? (
-            <div className="relative group flex items-center gap-2 cursor-pointer">
-              <span>{session.user.name}</span>
+            <div className="relative flex items-center gap-2">
+              {/* User name as button */}
               <button
-                className="absolute top-full left-0 mt-2 w-max px-4 py-2 bg-red-500 text-white rounded shadow opacity-0 group-hover:opacity-100 transition-opacity z-20"
-                onClick={() => signOut()}
-                type="button"
+                className="relative font-semibold text-gray-800 focus:outline-none"
+                onClick={() => setShowSignOut((prev) => !prev)}
+                tabIndex={0}
               >
-                Sign out
+                {session.user.name}
               </button>
+              {/* Dropdown box */}
+              {showSignOut && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 min-w-[180px] bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+                  <div className="px-4 py-3 border-b border-gray-100 text-gray-700">
+                    <span className="block font-medium">Thông tin người dùng</span>
+                  </div>
+                  <button
+                    className="w-full px-4 py-2 text-left bg-red-500 hover:bg-red-600 text-white rounded-b-lg transition"
+                    onClick={() => signOut()}
+                    type="button"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <>

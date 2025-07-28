@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import GoogleLogin from "./Google.Login";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import protectRouter from "../Sercurity/protectRouter";
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -27,7 +28,7 @@ const formSchema = z.object({
     })
 });
 
-export default function Signin() {
+function Signin() {
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -43,14 +44,9 @@ export default function Signin() {
 
         const { username, password } = values
         const value = await signIn("credentials", { username, password, redirect: false })
-        if (value?.error) {
-            alert("Login failed")
 
-        } else {
-            router.push("/")
-            router.refresh()
-        }
     }
+
 
 
 
@@ -95,3 +91,5 @@ export default function Signin() {
     );
 
 }
+
+export default protectRouter(Signin);

@@ -1,6 +1,6 @@
 import Signin from "@/components/auth/signin";
 
-export default function Page() {
+export default function SigninPage() {
   return (
     <div>
       <Signin />
