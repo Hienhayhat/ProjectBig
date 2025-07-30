@@ -6,6 +6,8 @@ export default async function Page({
     params: Promise<{ product: string }>
 }) {
     const id = (await params).product
+    console.log('id', id);
+
     return (
         <div>
             <ProductDetail id={id} />

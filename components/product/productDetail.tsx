@@ -8,7 +8,7 @@ const axios = require('axios')
 const ProductDetail = (props: any) => {
     const [dataProduct, setDataProduct] = useState<any>()
     useEffect(() => {
-        axios.get(`${process.env.API}products/${props.id}`)
+        axios.get(`${process.env.NEXT_PUBLIC_BE_URL}/products/${props.id}`)
             .then(function (response: any) {
                 setDataProduct(response.data)
                 console.log(response.data);

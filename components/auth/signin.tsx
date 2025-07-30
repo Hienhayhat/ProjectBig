@@ -44,7 +44,12 @@ function Signin() {
 
         const { username, password } = values
         const value = await signIn("credentials", { username, password, redirect: false })
-
+        if (value?.error) {
+            console.log(value.error);
+        } else {
+            router.push('/')
+            router.refresh()
+        }
     }
 
 

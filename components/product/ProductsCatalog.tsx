@@ -1,6 +1,13 @@
 import Link from "next/link"
 
-const arrProducts = [
+type Catalog = {
+    stt: number;
+    name: string;
+    icon: string;
+    URL?: string;
+};
+
+const arrProducts: Catalog[] = [
     {
         stt: 1,
         name: 'thể thao',

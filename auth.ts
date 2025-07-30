@@ -3,6 +3,15 @@ import Credentials from "next-auth/providers/credentials"
 import axios from "axios"
 import Google from "next-auth/providers/google"
 import { redirect } from 'next/navigation'
+import { error } from "console"
+
+// Extend the User type to include accessToken
+declare module "next-auth" {
+    interface User {
+        accessToken?: string;
+        [key: string]: any;
+    }
+}
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -23,12 +32,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 })
                     .then((res) => {
 
-                        user = res.data.user
+                        user = { ...res.data.user, accessToken: res.data.accessToken };
+
 
 
                     })
                     .catch((err) => {
-
+                        return error
 
                     })
                 // You can use any database or API to validate the user credentials here.
@@ -56,26 +66,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     callbacks: {
         async jwt({ token, account, user }) {
             // Handle credentials login
-            if (user) { // User is available during sign-in
-                token.user = user as any;
+            if (user) {
+                token.user = user; // Store all user data
+                token.accessToken = user.accessToken; // Store accessToken if present
             }
 
             // Handle Google login
             if (account?.provider === 'google') {
                 try {
-                    console.log(account.access_token);
-
                     const res = await axios.post(`${process.env.BE_URL}/auth/google`, {
                         accessToken: account.access_token,
-
                     });
                     if (res.status !== 200) {
-                        console.log(1);
-
                         redirect('/');
                     }
-
-                    token.accessToken = res.data.accessToken; // your backend JWT
+                    token.accessToken = res.data.accessToken;
+                    token.user = res.data.user; // Store all user data from backend
                 } catch (error) {
                     console.error('Google backend login failed:', error);
                 }
@@ -84,8 +90,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
         async session({ session, token }) {
-            // ✅ Expose access_token to client
             session.accessToken = token.accessToken as string;
+            session.user = token.user as any; // Expose all user data
+
             return session;
         },
 

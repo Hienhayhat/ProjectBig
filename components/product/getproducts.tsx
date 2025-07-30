@@ -11,14 +11,18 @@ const ListProduct = () => {
 
 
     useEffect(() => {
-        axios.get(`${process.env.API}products?current=${pageCurrent}&pageSize=${pageSize}`)
+        console.log(process.env.NEXT_PUBLIC_BE_URL);
+
+        axios.get(`${process.env.NEXT_PUBLIC_BE_URL}/products?current=${pageCurrent}&pageSize=${pageSize}`)
             .then(function (response: any) {
-                setlistProduct(response.data.Product)
-                setTotalPage(response.data.totalPage);
+
+                setlistProduct(response?.data?.Product)
+                setTotalPage(response?.data?.totalPage);
                 console.log(totalPage);
             })
             .catch(function (error: any) {
-                console.log(error);
+                setlistProduct([]); // fallback to empty array on error
+                setTotalPage(0);
             });
     }, [pageCurrent]);
 
@@ -26,6 +30,7 @@ const ListProduct = () => {
     const GetPageCurrent = (page: number) => {
         setPageCurrent(page)
     }
+    console.log('listProduct', listProduct);
 
     return (
         <div>
@@ -49,7 +54,7 @@ const ListProduct = () => {
                     return (
                         <div className="w-[200px] h-[280px] border-2 shadow-2xl mx-[10px] my-[5px] rounded-lg overflow-hidden hover:border-pink-200 hover:shadow-pink-500/50" key={productdata._id}>
                             <Link href={productdata._id} >
-                                <img src={`${process.env.API}${productdata.img}.jpg`} className="w-[200px] h-[200px] object-fill"></img>
+                                <img src={`${process.env.NEXT_PUBLIC_BE_URL}/${productdata.img}.jpg`} className="w-[200px] h-[200px] object-fill"></img>
 
                                 <div className="w-[100%] h-[20%] truncate ...">{productdata.name}</div>
                                 <span>

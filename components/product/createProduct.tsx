@@ -67,7 +67,7 @@ const CreateProduct = () => {
                     },
                 });
             // setUploadResponse(responsefile.data);
-            const response = axios.post(`${process.env.API}products`, {
+            const response = axios.post(`${process.env.NEXT_PUBLIC_BE_URL}/products`, {
                 name: Name,
                 type: Type,
                 price: Price,

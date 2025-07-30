@@ -14,7 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-const locale = ["Vi", "En"];
+const locale = ["Vi", "En"]; // Make sure this is present!
 import { signOut } from "next-auth/react"
 
 
@@ -23,6 +23,7 @@ export const NavBar = (props: any) => {
   const [showSignOut, setShowSignOut] = useState(false); // Add this state
   const router = useRouter()
   const { session } = props;
+
   return (
     <header className="sticky top-0  px-[16px] md:px-[80px] z-10 custom-bg pb-3">
       <div className="w-full flex justify-between ">
@@ -40,7 +41,7 @@ export const NavBar = (props: any) => {
                 <NavigationMenuTrigger className="hover:text-gray-500">VI</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="flex flex-col w-[61.23px] text-center">
-                    {locale?.map((item) => (
+                    {locale.map((item) => (
                       <div
                         key={item}
                         className="m-1 transition hover:text-gray-500 rounded-sm cursor-pointer"
@@ -68,7 +69,7 @@ export const NavBar = (props: any) => {
               {showSignOut && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 min-w-[180px] bg-white border border-gray-200 rounded-lg shadow-lg z-30">
                   <div className="px-4 py-3 border-b border-gray-100 text-gray-700">
-                    <span className="block font-medium">Thông tin người dùng</span>
+                    <Link href={`/users/profile/${session.user.id}`} className="block font-medium">Thông tin người dùng</Link>
                   </div>
                   <button
                     className="w-full px-4 py-2 text-left bg-red-500 hover:bg-red-600 text-white rounded-b-lg transition"
