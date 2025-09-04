@@ -1,10 +1,11 @@
+import UserDetail from "@/components/user/userdetail";
+
 export default async function Page({
     params,
 }: {
-    params: Promise<{ UserID: any }>
+    params: Promise<{ UserID: string }>
 }) {
-    const { userid } = (await params).UserID;
-    console.log('userid', userid);
+    const userid = (await params).UserID;
 
-    return <div>My Post: {userid}</div>
+    return <UserDetail userid={userid} />
 }

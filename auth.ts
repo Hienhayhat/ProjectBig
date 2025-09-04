@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials"
 import axios from "axios"
 import Google from "next-auth/providers/google"
 import { redirect } from 'next/navigation'
-import { error } from "console"
+import { log } from "console"
 
 // Extend the User type to include accessToken
 declare module "next-auth" {
@@ -26,19 +26,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             authorize: async (credentials) => {
                 let user = null
 
+
                 await axios.post(`${process.env.BE_URL}/auth/login`, {
                     username: credentials.username,
                     password: credentials.password,
                 })
                     .then((res) => {
 
-                        user = { ...res.data.user, accessToken: res.data.accessToken };
+                        user = { data: res.data.user, accessToken: res.data.access_token };
+
 
 
 
                     })
                     .catch((err) => {
-                        return error
+                        console.log('err:', err);
+
+                        throw new Error("Invalid username or password");
 
                     })
                 // You can use any database or API to validate the user credentials here.
@@ -67,8 +71,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async jwt({ token, account, user }) {
             // Handle credentials login
             if (user) {
-                token.user = user; // Store all user data
-                token.accessToken = user.accessToken; // Store accessToken if present
+                token.user = user.data; // Store all user data
+                token.accessToken = user.accessToken; // Store accessToken from backend
             }
 
             // Handle Google login
@@ -76,22 +80,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 try {
                     const res = await axios.post(`${process.env.BE_URL}/auth/google`, {
                         accessToken: account.access_token,
+
                     });
-                    if (res.status !== 200) {
-                        redirect('/');
-                    }
-                    token.accessToken = res.data.accessToken;
+
+
+
+
+                    token.accessToken = res.data.access_token; // Store accessToken from backend
                     token.user = res.data.user; // Store all user data from backend
                 } catch (error) {
                     console.error('Google backend login failed:', error);
                 }
             }
 
+
             return token;
         },
         async session({ session, token }) {
-            session.accessToken = token.accessToken as string;
+            session.accessToken = token.accessToken as string;// Expose accessToken to the client
             session.user = token.user as any; // Expose all user data
+
 
             return session;
         },

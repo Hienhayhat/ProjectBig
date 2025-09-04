@@ -30,7 +30,6 @@ const ListProduct = () => {
     const GetPageCurrent = (page: number) => {
         setPageCurrent(page)
     }
-    console.log('listProduct', listProduct);
 
     return (
         <div>

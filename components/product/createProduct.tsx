@@ -60,7 +60,7 @@ const CreateProduct = () => {
 
 
         try {
-            const responsefile = axios.post(`${process.env.API}products/file`, formData
+            const responsefile = axios.post(`${process.env.NEXT_PUBLIC_BE_URL}products/file`, formData
                 , {
                     headers: {
                         'Content-Type': 'multipart/form-data',

@@ -68,7 +68,7 @@ export const NavBar = (props: any) => {
               {/* Dropdown box */}
               {showSignOut && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 min-w-[180px] bg-white border border-gray-200 rounded-lg shadow-lg z-30">
-                  <div className="px-4 py-3 border-b border-gray-100 text-gray-700">
+                  <div className="px-4 py-3 border-b border-gray-100 text-gray-700" onClick={() => setShowSignOut((prev) => !prev)}>
                     <Link href={`/users/profile/${session.user.id}`} className="block font-medium">Thông tin người dùng</Link>
                   </div>
                   <button

@@ -54,7 +54,7 @@ function Resgister() {
 
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
-        axios.post(`${process.env.API}users/register`, values)
+        axios.post(`${process.env.NEXT_PUBLIC_BE_URL}/users/register`, values)
             .then(function (response: any) {
                 if (response.data.status == 201) {
                     setResponseMsg(response.data.message);

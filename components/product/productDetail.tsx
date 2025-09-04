@@ -11,7 +11,6 @@ const ProductDetail = (props: any) => {
         axios.get(`${process.env.NEXT_PUBLIC_BE_URL}/products/${props.id}`)
             .then(function (response: any) {
                 setDataProduct(response.data)
-                console.log(response.data);
 
             })
             .catch(function (error: any) {
