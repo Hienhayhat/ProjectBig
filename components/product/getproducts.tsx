@@ -11,8 +11,6 @@ const ListProduct = () => {
 
 
     useEffect(() => {
-        console.log(process.env.NEXT_PUBLIC_BE_URL);
-
         axios.get(`${process.env.NEXT_PUBLIC_BE_URL}/products?current=${pageCurrent}&pageSize=${pageSize}`)
             .then(function (response: any) {
 

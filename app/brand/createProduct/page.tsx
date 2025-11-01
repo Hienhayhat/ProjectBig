@@ -1,4 +1,6 @@
+'use client';
 import CreateProduct from '@/components/product/createProduct';
+import protectRouterAdmin from '@/components/Sercurity/protectRouterAdmin';
 
 export default function FileUpload() {
     return (
@@ -7,3 +9,4 @@ export default function FileUpload() {
         </div>
     );
 }
+protectRouterAdmin(FileUpload)

@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 const locale = ["Vi", "En"]; // Make sure this is present!
 import { signOut } from "next-auth/react"
+import FindProductBar from "../ui/findProductBar";
 
 
 export const NavBar = (props: any) => {
@@ -68,6 +69,17 @@ export const NavBar = (props: any) => {
               {/* Dropdown box */}
               {showSignOut && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 min-w-[180px] bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+                  {/* Admin option */}
+                  {session.user.role === "admin" && (
+                    <>
+                      <div className="px-4 py-3 border-b border-gray-100 text-gray-700 font-semibold hover:bg-blue-50 transition" onClick={() => setShowSignOut((prev) => !prev)}>
+                        <Link href="/admin/products" className="block">Quản lí sản phẩm</Link>
+                      </div>
+                      <div className="px-4 py-3 border-b border-gray-100 text-gray-700 font-semibold hover:bg-blue-50 transition" onClick={() => setShowSignOut((prev) => !prev)}>
+                        <Link href="/admin/users" className="block">Quản lí người dùng</Link>
+                      </div>
+                    </>
+                  )}
                   <div className="px-4 py-3 border-b border-gray-100 text-gray-700" onClick={() => setShowSignOut((prev) => !prev)}>
                     <Link href={`/users/profile/${session.user.id}`} className="block font-medium">Thông tin người dùng</Link>
                   </div>
@@ -102,7 +114,7 @@ export const NavBar = (props: any) => {
 
         </div>
       </div>
-
+      {/*logo*/}
       <div className="relative flex items-center px-10 h-full justify-between">
         <div className="flex flex-row items-center gap-1 cursor-pointer" onClick={() => {
           router.push('/')
@@ -121,22 +133,8 @@ export const NavBar = (props: any) => {
           </div>
           <Logo />
         </div>
-
-        <form
-          className="flex w-[670px] h-[50px] rounded-2xl border-[2px] border-gray-400 p-3 items-center bg-white"
-          onSubmit={() => { }}
-        >
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="tìm kiếm"
-            className="w-[670px] outline-none text-2xl"
-          />
-          <button>
-            <SearchIcon className="cursor-pointer" />
-          </button>
-        </form>
+        {/*find bar*/}
+        <FindProductBar />
 
         <div className="flex w-[112.5px] h-auto justify-center items-center cursor-pointer transition-transform hover:scale-110">
           <ShoppingCartIcon width={40} height={40} />

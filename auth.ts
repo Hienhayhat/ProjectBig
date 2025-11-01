@@ -2,8 +2,7 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import axios from "axios"
 import Google from "next-auth/providers/google"
-import { redirect } from 'next/navigation'
-import { log } from "console"
+
 
 // Extend the User type to include accessToken
 declare module "next-auth" {

@@ -3,17 +3,21 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function protectRouter(Component: any) {
-    return function ProtectRouter(props: any) {
+export default function protectRouterAdmin(Component: any) {
+    return function ProtectRouterAdmin(props: any) {
         const { data: session, status } = useSession();
         const router = useRouter();
 
         useEffect(() => {
+            // only run after the session is fully loaded
             if (status === "authenticated") {
-                router.replace("/"); // redirect logged-in users away
+                if (session?.user?.role !== "admin") {
+                    router.replace("/");
+                }
             }
-        }, [status, router]);
+        }, [status, session, router]);
 
+        // ✅ Show a loading screen until session is ready
         if (status === "loading") {
             // 👇 You can customize this to match your design system
             return (
@@ -24,7 +28,9 @@ export default function protectRouter(Component: any) {
             );
         }
 
-        if (status === "authenticated") {
+
+        // ✅ Prevent showing admin page to non-admin users
+        if (status === "authenticated" && session?.user?.role !== "admin") {
             return null;
         }
 

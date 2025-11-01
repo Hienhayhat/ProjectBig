@@ -17,7 +17,6 @@ const UserDetail = (props: any) => {
 
 
     const accessToken = session?.accessToken;
-    console.log('Access Token:', accessToken);
     useEffect(() => {
         axios.get(`${process.env.NEXT_PUBLIC_BE_URL}/users/${props.userid}`, {
             headers: {

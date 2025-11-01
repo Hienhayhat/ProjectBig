@@ -1,125 +1,150 @@
-'use client'
-import React from 'react';
-
-const axios = require('axios');
-import { useState } from 'react';
-import {
-
-    Form,
-    Input,
-    Segmented,
-} from 'antd';
-import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
-
-
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
-};
-
+'use client';
+import React, { useState } from 'react';
+import { Form, Input, InputNumber, Button, Upload, Card, message, Spin } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { useSession } from 'next-auth/react';
+import axios from 'axios';
 
 const CreateProduct = () => {
-    const [file, setFile] = useState();
-    const [Name, setName] = useState();
-    const [Type, setType] = useState();
-    const [Price, setPrice] = useState();
-    const [Description, setDescription] = useState();
-    const [ProductImgCode, setProductImgCode] = useState(0)
-    const [uploadResponse, setUploadResponse] = useState(null);
-    const handleFileChange = (e: any) => {
-        setFile(e.target.files[0]);
-        const randomNumber: number = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-        setProductImgCode(randomNumber)
-    };
-    const handleGetName = (e: any) => {
-        setName(e.target.value);
-    }
-    const handleGetDescription = (e: any) => {
-        setDescription(e.target.value);
-    }
-    const handleGetType = (e: any) => {
-        setType(e.target.value);
-    }
-    const handleGetPrice = (e: any) => {
-        setPrice(e.target.value);
-    }
+    const { data: session } = useSession();
+    const accessToken = session?.accessToken;
+    const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
+    const [fileList, setFileList] = useState<any[]>([]);
+    const [imgCode, setImgCode] = useState<number | null>(null);
 
-
-
-    const onFinish = async (values: any) => {
-        if (!file) return alert('Please select a file.');
-        const formData = new FormData();
-        formData.append('file', file, ProductImgCode + '.jpg');
-
-
-        try {
-            const responsefile = axios.post(`${process.env.NEXT_PUBLIC_BE_URL}products/file`, formData
-                , {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                });
-            // setUploadResponse(responsefile.data);
-            const response = axios.post(`${process.env.NEXT_PUBLIC_BE_URL}/products`, {
-                name: Name,
-                type: Type,
-                price: Price,
-                description: Description,
-                img: ProductImgCode
-            });
-            setUploadResponse(response)
-
-        } catch (error) {
-            console.error('Error :', error);
+    const handleUploadChange = ({ fileList }: any) => {
+        setFileList(fileList.slice(-1)); // Only keep the latest file
+        if (fileList.length > 0 && !imgCode) {
+            setImgCode(Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000);
         }
     };
 
-    const [form] = Form.useForm();
-    return (
-        <Form
-            {...formItemLayout}
-            form={form}
-            variant={'outlined'}
-            style={{ maxWidth: 600 }}
-            initialValues={{ variant: 'filled' }}
-            onFinish={onFinish}
-        >
-            <Form.Item label="Tên sản phẩm" name="NameProduct" rules={[{ required: true, message: 'Xin hãy nhập tên sản phẩm' }]}>
-                <Input onChange={handleGetName} />
-            </Form.Item>
-            <Form.Item label="Loại sản phẩm" name="TypeProduct" rules={[{ required: true, message: 'Xin hãy nhập loại sản phẩm' }]}>
-                <Input placeholder='Đồ ăn,quần áo,đồ chơi,...' onChange={handleGetType} />
-            </Form.Item>
-            <Form.Item
-                label="Giá "
-                name="PriceProduct"
-                rules={[{ required: true, message: 'Xin hãy nhập giá sản phẩm' }]}
-            >
-                <Input style={{ width: '100%' }} onChange={handleGetPrice} />
-            </Form.Item>
+    const onFinish = async (values: any) => {
+        if (fileList.length === 0) {
+            message.warning('Vui lòng chọn ảnh sản phẩm!');
+            return;
+        }
+        setLoading(true);
+        const formData = new FormData();
+        formData.append('file', fileList[0].originFileObj, `${imgCode}.jpg`);
 
-            <Form.Item
-                label="Mô tả"
-                name="DescriptionProduct"
-                rules={[{ required: false }]}
+        try {
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BE_URL}/products/file`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BE_URL}/products/data`,
+                {
+                    name: values.name,
+                    type: values.type,
+                    price: values.price,
+                    description: values.description,
+                    img: imgCode,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            message.success('Tạo sản phẩm thành công!');
+            form.resetFields();
+            setFileList([]);
+            setImgCode(null);
+        } catch (error) {
+            message.error('Có lỗi xảy ra khi tạo sản phẩm!');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="flex justify-center items-center min-h-[80vh] bg-gradient-to-br from-blue-50 to-blue-100 py-10">
+            <Card
+                title="Tạo sản phẩm mới"
+                className="w-full max-w-lg shadow-xl rounded-2xl"
+                variant={undefined}
             >
-                <Textarea className='h-14' onChange={handleGetDescription} />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                <input type="file" onChange={handleFileChange} />
-                <Button type="submit" >
-                    Submit
-                </Button>
-                {uploadResponse && <div>Upload successful</div>}
-            </Form.Item>
-        </Form>
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={onFinish}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Tên sản phẩm"
+                        name="name"
+                        rules={[{ required: true, message: 'Xin hãy nhập tên sản phẩm' }]}
+                    >
+                        <Input placeholder="Nhập tên sản phẩm" />
+                    </Form.Item>
+                    <Form.Item
+                        label="Loại sản phẩm"
+                        name="type"
+                        rules={[{ required: true, message: 'Xin hãy nhập loại sản phẩm' }]}
+                    >
+                        <Input placeholder="Đồ ăn, quần áo, đồ chơi, ..." />
+                    </Form.Item>
+                    <Form.Item
+                        label="Giá"
+                        name="price"
+                        rules={[{ required: true, message: 'Xin hãy nhập giá sản phẩm' }]}
+                    >
+                        <InputNumber
+                            min={0}
+                            className="w-full"
+                            formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            placeholder="Nhập giá sản phẩm"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Mô tả"
+                        name="description"
+                        rules={[{ required: false }]}
+                    >
+                        <Input.TextArea rows={3} placeholder="Mô tả sản phẩm" />
+                    </Form.Item>
+                    <Form.Item
+                        label="Ảnh sản phẩm"
+                        required
+                    >
+                        <Upload
+                            beforeUpload={() => false}
+                            fileList={fileList}
+                            onChange={handleUploadChange}
+                            accept="image/*"
+                            listType="picture-card"
+                            maxCount={1}
+                        >
+                            {fileList.length < 1 && (
+                                <div>
+                                    <UploadOutlined />
+                                    <div style={{ marginTop: 8 }}>Tải ảnh lên</div>
+                                </div>
+                            )}
+                        </Upload>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            className="w-full"
+                            loading={loading}
+                        >
+                            {loading ? <Spin /> : "Tạo sản phẩm"}
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     );
 };
 
