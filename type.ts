@@ -29,3 +29,17 @@ declare module 'next-auth' {
         accessToken?: string;
     }
 }
+export interface CartItem {
+    productId: string
+    name: string
+    image: string
+    price: number
+    quantity: number
+    variants?: Record<string, any>
+}
+
+export interface Cart {
+    items: CartItem[]
+    totalQuantity: number
+    totalPrice: number
+}

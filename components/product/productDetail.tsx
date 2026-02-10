@@ -3,12 +3,34 @@
 import { Rate } from "antd";
 import { useEffect, useState } from "react";
 import { ShoppingCartOutlined, CreditCardOutlined } from '@ant-design/icons';
+import { useSession } from "next-auth/react";
 const axios = require('axios')
 
 
 const ProductDetail = (props: any) => {
     const [dataProduct, setDataProduct] = useState<any>()
     const [showModal, setShowModal] = useState(false);
+
+    const { data: session, status } = useSession();
+    const handleAddToCart = () => {
+        console.log(session);
+
+        if (status !== "authenticated") {
+            alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
+            window.location.href = '/signin';
+            return;
+        } else {
+            axios.patch(`${process.env.NEXT_PUBLIC_BE_URL}/cart/${session?.user?.id}`, {
+                productId: props.id,
+                quantity: 1
+            }).then(function (response: any) {
+                console.log("Added to cart:", response.data);
+            })
+                .catch(function (error: any) {
+                    console.log(error);
+                });
+        }
+    }
 
     useEffect(() => {
         axios.get(`${process.env.NEXT_PUBLIC_BE_URL}/products/${props.id}`)
@@ -94,7 +116,7 @@ const ProductDetail = (props: any) => {
                     <div className="absolute bottom-10 right-10 flex gap-6">
                         <button
                             className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl shadow hover:bg-blue-700 transition-colors text-lg font-semibold"
-                            onClick={() => console.log('Add to cart', dataProduct?.id)}
+                            onClick={handleAddToCart}
                         >
                             <ShoppingCartOutlined />
                             Thêm vào giỏ hàng

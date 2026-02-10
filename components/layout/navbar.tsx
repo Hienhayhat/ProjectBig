@@ -17,13 +17,17 @@ import React, { useState } from "react";
 const locale = ["Vi", "En"]; // Make sure this is present!
 import { signOut } from "next-auth/react"
 import FindProductBar from "../ui/findProductBar";
+import CartComponent from "../ui/cart";
 
 
 export const NavBar = (props: any) => {
-  const [input, setInput] = useState<string>("");
   const [showSignOut, setShowSignOut] = useState(false); // Add this state
   const router = useRouter()
   const { session } = props;
+  const [displayCart, setDisplayCart] = useState(false);
+  const [open, setOpen] = useState(false)
+
+
 
   return (
     <header className="sticky top-0  px-[16px] md:px-[80px] z-10 custom-bg pb-3">
@@ -136,8 +140,15 @@ export const NavBar = (props: any) => {
         {/*find bar*/}
         <FindProductBar />
 
-        <div className="flex w-[112.5px] h-auto justify-center items-center cursor-pointer transition-transform hover:scale-110">
-          <ShoppingCartIcon width={40} height={40} />
+        <div className="relative flex w-[112.5px] justify-center items-center">
+          <ShoppingCartIcon
+            width={40}
+            height={40}
+            className="cursor-pointer transition-transform hover:scale-110"
+            onClick={() => setOpen((v) => !v)}
+          />
+
+          {open && <CartComponent onClose={() => setOpen(false)} />}
         </div>
       </div>
     </header>
